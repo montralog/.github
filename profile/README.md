@@ -4,32 +4,34 @@
 
 **Monitoring · Tracing · Logging · Tracking**
 
-Open-source, self-hosted observability for understanding infrastructure and applications. Bring logs, traces, recurring patterns, Prometheus metrics, dashboards and alerts into one workspace.
+Open-source observability for infrastructure and applications. Explore logs, traces, recurring patterns, Prometheus metrics, dashboards and alerts in one workspace.
 
-### Get started with 0.5.1
+### Start with Docker
 
-- [Stable release and verified downloads](https://github.com/montralog/montralog/releases/tag/v0.5.1)
-- [Docker quickstart](https://github.com/montralog/montralog#quickstart) · [Public container package](https://github.com/montralog/montralog/pkgs/container/montralog)
-- [Helm deployment](https://github.com/montralog/montralog/blob/main/deploy/helm/montralog/README.md) · [Artifact Hub](https://artifacthub.io/packages/helm/montralog/montralog)
-- [Organization rollout guide](https://github.com/montralog/montralog/blob/main/docs/ORGANIZATION_ROLLOUT.md)
-- [Documentation](https://github.com/montralog/montralog/tree/main/docs) · [Contribute or report a bug](https://github.com/montralog/montralog/blob/main/CONTRIBUTING.md)
+**Stable release: 0.6.0.** Linux/amd64. Docker Engine/Desktop with Compose v2 is the installation path; host Python, Helm and Kubernetes are not required.
 
 ```sh
-docker pull ghcr.io/montralog/montralog:0.5.1
+docker pull ghcr.io/montralog/montralog:0.6.0
 ```
 
-Use the deployment guides to configure persistent storage, credentials and the required encryption key before starting an instance. The published image supports Linux/amd64.
+- [Install with Docker](https://github.com/montralog/montralog/blob/main/docs/CONTAINERS.md)
+- [Release downloads and checksums](https://github.com/montralog/montralog/releases/tag/v0.6.0) · [Public container package](https://github.com/montralog/montralog/pkgs/container/montralog)
+- [Published security, bootstrap and load/recovery reports](https://github.com/montralog/montralog/blob/main/docs/reports/README.md)
+- [Customer isolation](https://github.com/montralog/montralog/blob/main/docs/TENANCY.md) · [Production acceptance matrix](https://github.com/montralog/montralog/blob/main/docs/PRODUCTION.md)
+- [Documentation](https://github.com/montralog/montralog/tree/main/docs) · [Contributing](https://github.com/montralog/montralog/blob/main/CONTRIBUTING.md)
 
-### Built for self-hosting
+### Customer hosting and security
 
-Docker Compose and Helm deployments, SQLite for a single gateway, optional PostgreSQL for multiple gateways, and Prometheus for metrics. Create graphs, stats, tables and timelines; manage scoped API tokens, notification rules, teams and groups.
+Use separate Docker projects, databases, keys, tokens, networks and queues per customer. Database transactions and browser cookies are bound to customer identity. Shared-gateway/database SaaS hosting is disabled. Teams and groups manage membership within a customer.
 
-Company sign-in configuration supports Microsoft Entra ID, Google Workspace and Okta. Provider registration and live tenant verification are required. Vendor audit polling and directory synchronization are not implemented.
+Saved credentials require HTTPS. Outbound transport rejects redirects and unapproved private/metadata destinations, pins validated DNS addresses and preserves TLS certificate verification. Encrypted credential migration and backup/key recovery have regression coverage.
 
-### Release verification
+Release checks cover Python 3.11/3.13, browser behavior, Docker and retained chart compatibility, dependency/static/image scans, private bootstrap and synthetic ingestion/recovery. Public reports retain all severities and static warnings. The exact scanned release image is tested before publication and includes build provenance.
 
-0.5.1 passed 151 Python tests on each of Python 3.11 and 3.13, three frontend tests, four Chromium acceptance cases, Docker checks and Kubernetes deployment checks. The published image's scan reported zero HIGH/CRITICAL findings. Checksums, security reports, dependency inventory and browser results accompany the release; the image includes GitHub build provenance.
+### Operating scope
 
-Read the [verification evidence](https://github.com/montralog/montralog/blob/main/docs/SECURITY_VERIFICATION-0.5.1.md), [support scope](https://github.com/montralog/montralog/blob/main/docs/SUPPORT.md) and [rollout requirements](https://github.com/montralog/montralog/blob/main/docs/ORGANIZATION_ROLLOUT.md). Production use requires acceptance in your own environment, including networking/TLS, tenant integrations, capacity and recovery. A passing scan is a snapshot, not an independent audit.
+Validate customer TLS, egress, backups, actual SSO/Slack destinations, sustained workload capacity and host/disk failure before relying on the deployment. Short synthetic measurements are not a capacity guarantee or independent audit. Host administrators remain trusted; whole-stack HA and shared-database SaaS have not been established.
 
-First-party code is [Apache-2.0](https://github.com/montralog/montralog/blob/main/LICENSE). Contributions and reproducible feedback are welcome. Please [report security issues privately](https://github.com/montralog/montralog/security/advisories/new).
+Company sign-in configuration supports Microsoft Entra ID, Google Workspace and Okta; live provider registration is required. Vendor audit polling and directory synchronization are not implemented. Historical Helm artifacts remain available for existing deployments.
+
+First-party code is [Apache-2.0](https://github.com/montralog/montralog/blob/main/LICENSE). Please [report security issues privately](https://github.com/montralog/montralog/security/advisories/new).
